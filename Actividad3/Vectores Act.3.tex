@@ -1,0 +1,104 @@
+\documentclass[12pt,a4paper]{article}
+
+% set font encoding for PDFLaTeX or XeLaTeX
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{fontspec}
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage[spanish]{babel}
+  \usepackage{lmodern}
+  \usepackage{amsmath}
+  \usepackage{amsfonts}
+  \usepackage{amssymb}
+  \usepackage{graphicx}
+  \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\fi
+
+% used in maketitle
+\title{\textbf{Movimiento de Proyectiles Act.3}}
+\author{Eduardo Castillo Bastida}
+
+% Enable SageTeX to run SageMath code right inside this LaTeX file.
+% documentation: http://mirrors.ctan.org/macros/latex/contrib/sagetex/sagetexpackage.pdf
+%\usepackage{graphicx}
+
+
+\begin{document}
+\maketitle
+El movimiento de un proyectil es un tipo de movimiento en el cual un objeto o partícula describe una trayectoria parabólica. La posición en cualquier instante durante su recorrido, se puede determinar según las siguientes ecuaciones:
+\begin{eqnarray}
+x=v_{0}tcos(\theta)\nonumber\\
+y=v_{0}tsin(\theta)-gt^{2}
+\end{eqnarray}
+El tipo de trayectoria, el alcance horizontal y la altura máxima del movimiento de un proyectil en cercanías de la superficie terrestre, dependen de los parámetros iniciales del ángulo y la velocidad inicial del lanzamiento.
+\section{Dependencia del ángulo}
+La siguiente actividad consiste en determinar las gráficas de las trayectorias de un proyectil en función del ángulo de lanzamiento. Se requiere especificar la velocidad inicial y el número de puntos de cada gráfica. Los ángulos tomados corresponden a $15^{o}$, $30^{o}, 45^{o}, 60^{o}, 75^{o}$ y $90^{o}$. El número de puntos para cada gráfica  corresponde a 20. El tiempo de vuelo será calculado con  la siguiente ecuación:
+\begin{eqnarray}
+t=\frac{2v_{0}sin(\theta)}{g}
+\end{eqnarray}
+Si se selecciona, por ejemplo, una velocidad inicial de 10 m/s. Las trayectorias obtenidas para los ángulos seleccionados, corresponden a los mostrados en la figura \ref{fig:figura1}:
+\begin{figure}
+\centering
+\includegraphics[width=8cm]{GraficaVectores.png}
+\caption{Trayectoria de un proyectil en función del ángulo ($\theta$)}\label{fig:figura1}
+\end{figure}
+\section{Aplicacíon Fortran}
+La aplicación Fortran empleado para obtener el conjunto de datos para los ángulos especificados, corresponde a:
+\begin{verbatim}
+program Vector
+    implicit none
+
+  ! definimos constantes
+    real, parameter :: g = 9.81
+    real, parameter :: pi = 3.1415927
+  
+  ! definimos las variables
+    integer::i, k, nps
+    real :: a, vi, tv
+    real, dimension(20):: t=0.,x=0., y=0.
+  
+
+  ! Leer valores para el ángulo a, y la velocidad inicial u desde la terminal
+  
+    write(*,*) 'MOVIMIENTO PARABÓLICO'
+    
+    write(*,*) 'DATOS DESPLAZAMIENTO VERTICAL Y HORIZONTAL'
+    
+    write(*,*) 'Introduzca los valores de  la velocidad inicial (vi) en m&
+       &/s y el número de datos'
+  
+    read(*,*) vi,nps
+
+  !Definimos el ciclo
+    cicloenangulo:do k=15,90,15
+      ! convirtiendo ángulo a radianes
+       a = k * pi / 180.0
+
+      ! las ecuación para el cálculo del tiempo de vuelo
+       tv=2*vi*sin(a)/g
+       
+  ciclodeposicion: do i=0,nps
+     t(i)=t(i)+i*(tv/real(nps))
+     x(i)=x(i)+vi*t(i)*cos(a)
+     y(i)=y(i)+(2*vi*t(i)*sin(a)-g*t(i)**2)/2
+  ! output data to a file
+     open(1, file='datos.dat', status='unknown')
+     write(1,1000) x(i), y(i)
+     1000 format(f15.10,5x,f15.10)
+  end do ciclodeposicion
+  write(1,1100)
+  1100 format(/)
+ 
+  do i=0,nps
+     t(i)=0
+     x(i)=0
+     y(i)=0
+     end do
+  end do cicloenangulo
+   close(1)
+
+\end{verbatim}
+
+\end{document}
