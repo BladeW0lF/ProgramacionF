@@ -1,0 +1,199 @@
+\documentclass{article}
+
+% set font encoding for PDFLaTeX or XeLaTeX
+\usepackage{ifxetex}
+\ifxetex
+\usepackage{fontspec}
+\else
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+% used in maketitle
+\title{Evaluacion 1}
+\author{Eduardo Castillo Bastida\\
+Departamento de Fisica \\
+Universidad de Sonora}
+\date{30 de octubre de 2017}
+
+
+% Enable SageTeX to run SageMath code right inside this LaTeX file.
+% documentation: http://mirrors.ctan.org/macros/latex/contrib/sagetex/sagetexpackage.pdf
+% \usepackage{sagetex}
+
+\begin{document}
+\maketitle
+\clearpage
+
+\section{Actividad 1: Esfera}
+\begin{verbatim}
+program Sphere
+
+! Calcular el volumen de una esfera.
+!
+! Declarar las variables.
+! Constantes pi
+! variables= radio al cuadrado y altura
+
+  implicit none    
+
+  integer :: ierr
+  character(1) :: yn
+  real :: radius, area, vol
+  real, parameter :: pi = 3.141592653589793
+
+  interactive_loop: do
+
+!   Le pediremos al usuario por el valor del radio
+!   y las leeremos.
+
+    write (*,*) 'Ingrese por favor el radio a utilizar'
+    read (*,*,iostat=ierr) radius
+
+!   If radius and height could not be read from input,
+!   then cycle through the loop.
+
+    if (ierr /= 0) then
+      write(*,*) 'Error, invalid input.'
+      cycle interactive_loop
+    end if
+
+!   Compute area.  The ** means "raise to a power."
+
+    area = 4*pi * (radius**2)
+
+    vol=(4/3)*pi * (radius**3)
+
+!   Write the input variables (radius, height)
+!   and output (area) to the screen.
+
+    write (*,'(1x,a7,f14.2,5x,a7,f14.2,5x,a9,f14.2)') &
+         'radius=',radius,'area=',area
+    
+    write (*,'(1x,a7,f14.2,5x,a7,f14.2,5x,a9,f14.2)') &
+         'radius=',radius, 'volume=',vol
+        
+    
+
+    yn = ' '
+    yn_loop: do
+      write(*,*) 'Perform another calculation? y[n]'
+      read(*,'(a1)') yn
+      if (yn=='y' .or. yn=='Y') exit yn_loop
+      if (yn=='n' .or. yn=='N' .or. yn==' ') exit interactive_loop
+    end do yn_loop
+
+ end do interactive_loop
+
+ 
+
+end program Sphere
+\end{verbatim}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=12cm]{Esfera.png}
+\caption{Resultados.}\label{fig:figura1}
+\end{figure}
+
+\section{Actividad 2: Medias}
+\begin{verbatim}
+program summation
+implicit none
+integer :: sum, a, count
+real :: arit, harm, sumainv
+real :: fa, fc, fs
+
+print*, "Este programa realiza las medias de una sumatoria,"
+print*, "cuando quiera aplaste 0 para terminar"
+open(unit=10, file="SumData.DAT", status='unknown')
+
+suma = 0
+count = 0
+sumainv = 0
+
+do
+ print*, "Add:"
+ read*, a
+ if (a == 0) then
+  exit
+ else
+sum = sum + a
+count = count + 1
+fa = float(a)
+fa = 1/fa
+sumainv = sumainv + fa
+
+ end if
+ write(10,*) a
+end do
+fs = float(sum)
+fc = float(count)
+arit = fs / fc
+harm = fc / sumainv
+
+
+print*, "Sumatoria =", sum
+write(10,*) "Sumatoria =", sum
+write(10,*)' '
+print*, "Media aritmetica =", arit
+write(10,*) "Media aritmetica =", arit
+write(10,*) ' '
+print*, "Media armonica =", harm
+write(10,*) "Media armonica =", harm
+write(10,*) ' '
+
+
+close(10)
+
+end
+\end{verbatim}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=12cm]{Media.png}
+\caption{Resultados.}\label{fig:figura1}
+\end{figure}
+
+\section{Actividad 3: Leibniz}
+\begin{verbatim}
+Program Liebniz
+  ! Este programa calcula el valores del numero pi usando la serie de
+  ! Leibniz
+  ! declaracion de variables
+  implicit none
+  integer:: i, n  
+  real :: pi, serie
+
+  ! Pregunta por el numero de terminos de la serie
+  write(*,*) 'Escribe el valor de n, número de terminos de la serie'
+  read (*,*) n
+
+  serie = 0.
+  
+  do i=0,n
+
+     serie = serie + (((-1)**i)/(2*real(i) + 1))
+
+  end do
+  
+pi= serie * 4.
+
+  write (*,*) 'cuando n =',n, 'pi=',pi
+end program 
+
+
+\end{verbatim}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=12cm]{Pi.png}
+\caption{Resultados.}\label{fig:figura1}
+\end{figure}
+
+
+
+\end{document}
