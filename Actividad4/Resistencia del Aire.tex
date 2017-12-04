@@ -1,0 +1,197 @@
+\documentclass[12pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\author{Eduardo Castillo Bastida}
+% used in maketitle                                                             
+\title{\textbf{Movimiento de Proyectiles (con Resistencia del Aire)}}
+\begin{document}
+\maketitle
+Para el estudio de proyectiles con resistencia del aire(figura 1), consideremos un proyectil de masa m, lanzado a un tiempo $t_{0}=0$ al nivel de la superficie terrestre con un ángulo $\theta$ y una velocidad inicial $v_{0}$. Adicional a la fuerza por la gravedad, se considera la presencia de una fuerza por la resistencia del aire, opuesta a la dirección del movimiento, proporcional a la velocidad instantánea.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=12cm]{mpcl2-6-638.jpg}
+\caption{Trayectoria de un proyectil con y sin resistencia del aire.}\label{fig:figura1}
+\end{figure}
+
+Considerandoque el movimiento se realiza completamente en el plano x-y, la ecuación del movimiento, viene dada por la siguiente ecuación:
+\begin{eqnarray}
+m\frac{dv}{dt}=mg-cv
+\end{eqnarray}
+En donde $v=(v_{x},v_{y})$ es la velocidad del proyectil, $g=(0,-g)$ es la aceleración gravitacional tomada como un vector en direccion de $-y$ y $c$ es una constante positiva. 
+Mientras tanto las ecuaciones que describen el movimiento por componentes, estan dadas por:
+\begin{eqnarray}
+m\frac{dv_{x}}{dt}=-cv_{x}\nonumber\\
+m\frac{dv_{y}}{dt}=-mg-cv_{y}
+\end{eqnarray}
+ Las ecuaciones anteriores, pueden resolverse con el método de integración de Euler. Este método consiste en solucionar una ecuación diferencial ordinaria de primer orden, através de un procedimiento numérico de primer orden, partiendo de valores iniciales. 
+En general, si se conoce el valor de una funcion $y(t)$, para un $t_{0}$ dado, el siguiente valor de la función para $t_{0}+h$, tomando un h lo sufientemente pequeño, puede  determinarse, empleando una expansión de Taylor alrededor de $t_{0}$, como sigue:
+\begin{eqnarray}
+f(t_{0}+h)=f(t_{0})+hy'(t_{0})+\frac{1}{2}h^{2}y''(t_{0})+O(h^{3})
+\end{eqnarray}
+Despreciando los terminos cuadráticos y mayores de h, obtenemos:
+\begin{eqnarray}
+y'(t_{0})\simeq\frac{f(t_{0})-f(t_{0}+h)}{h}
+\end{eqnarray}
+Tomando $y'(t_{0})=f(t,y(t))$, $y(t_{0})=y_{0}$ y $t_{n}=t_{0}+nh$, el siguiente paso de $t_{n}$ a $t_{n+1}$, para $y(t)$según el método de Euler, corresponde a:
+\begin{eqnarray}
+y_{n+1}=y_{n}+hf(t_{n},y_{n})
+\end{eqnarray}
+\section{Aplicación del Método de Euler}
+\subsection{Componente Horizontal de la Velocidad}
+Considerando la ecuación diferencial de la componente horizontal de la velocidad, tenemos:
+\begin{eqnarray}
+\frac{dv_{x}}{dt}=-\frac{c}{m}v_{x}=f(t,v_{x}(t))
+\end{eqnarray}
+Según el método de Euler el valor de $v_{x}(t_{n+1})$ a partir de $t_{n}$, corresponde a:
+\begin{eqnarray}
+v_{x}(t_{n+1}))=v_{x}(t_{n})-\frac{\delta t}{m}cv_{x}(t_{n})\nonumber\\
+v_{x}(t_{n+1}))=v_{x}(t_{n})[1-\frac{\delta t}{m}c]
+\end{eqnarray}
+Donde $h=\delta t$. La componente x de la posición se determinar a partir de:
+\begin{eqnarray}
+\frac{dv_{x}}{dt}=v_{x}\simeq \frac{x_{n+1}-x_{n}}{\delta t}
+\end{eqnarray}
+Luego:
+\begin{eqnarray}
+x_{n+1}=x_{n}+{\delta t}v_{x}(t_{n})
+\end{eqnarray}
+\subsection{Componente Vertical de la Velocidad}
+Similarmente al proceso realizado para $v_{x}$, tenemos:
+\begin{eqnarray}
+\frac{dv_{y}}{dt}=-g-\frac{c}{m}v_{y}=f(t,v_{y}(t))\\
+v_{y}(t_{n+1}))=v_{y}(t_{n})[1-\frac{\delta t}{m}c]-g\delta t\\
+y_{n+1}=y_{n}+{\delta t}v_{y}(t_{n})-g\delta t
+\end{eqnarray}
+\section{Aplicación Fortran para la Trayectoria de un Proyectil con Resistencia del Aire usando el Método de Euler}
+El código de la aplicación fortran para determinar las trayectorias de un proyectil esférico con resistencia del aire y velocidades $v_{0}$ entre 2 y 10 m/s, con valores iniciales $t_{0}=0$, $y_{0}=0$ y $x_{0}=0$, usando el método de integración de Euler.
+El código Fortran corresponde a:
+\begin{verbatim}
+   !     A continuacion la nomenclatura para llevar a cabo el programa                                                                                           *
+   !     m= masa del proyectil                                                         *
+   !     r= radio del proyectil                                                        *
+   !     v0= velocidad de lanzamiento                                                   *
+   !     vt= velocidad terminal                                                         *
+   !     cd= coeficiente de arrastre                                                    *
+   !     rho_a=  densidad de aire                                                           *
+   !     a= ángulo de lazamiento en grados                                             *
+   !     dt= incremento del tiempo                                                      *
+   !     g= aceleración gravitacional    
+   
+   
+   
+   !program Resistans                                                      
+  use parametros  
+  implicit none
+  real :: vt,v0,m,r
+
+  ! Leer valores para la velocidad inicial desde la terminal
+  
+  print*, 'Movimiento parabolico con resistencia de aire'
+  print*, 'con trayectoria a funcion del angulo'
+  write(*,*) 'Por Favor: introduzca los valores de  la velocidad inicial (v) en m/s'
+  read(*,*)   v0
+  write(*,*) 'Introduzca la masa del proyectil en kg'
+  read(*,*)   m
+  write(*,*) 'Introduzca el radio del proyectil en metros'
+  read(*,*)   r
+  call v_terminal(vt)
+  call friccion(vt, v0, fy, fx, x, a,  y, t)
+  
+end program Resistencia
+ module parametros 
+   implicit none
+
+   !Calcularemos la velocidad terminal usando estas variables 
+   !                                                                                                 *
+   !     h -------------- incremento del tiempo                                                      *
+   !     rho_a ----------Densidad del aire kg/m**3                                                   *
+   !     size -----------Tamaño del array                                                            *
+   !     g --------------Aceleración gravitacional                                                   *
+   !     C --------------Constante de arrastre                                                    
+
+  !definimos parametros y variables 
+  real, parameter :: g = 9.81, pi = 3.1415927, rho_a=1.128, C=0.45, h=0.01
+  integer:: size = 100
+    
+end module parametros
+
+*********************************************
+  subroutine v_terminal(vt)
+  use parametros 
+  implicit none 
+  real, intent(in)::m,r
+  real, intent(out):: vt
+  !Calculo de la velocidad terminal
+  
+  vt= sqrt((2*m*g)/(rho_a*pi*r**2*C))
+
+end subroutine v_terminal
+
+***********************************************
+  subroutine friccion(a,vt,v0,x,y,t,fx,fy)
+
+    
+   !     v0--------------Velocidad inicial del proyectil                                             *
+   !     vt -------------Velocidad terminal del proyectil vt = (d**2 *g)*( rho_p-rho_a)/18*mu        *
+   !     a -------------- Angulo del proyectil                                                       *
+   !     h --------------Incremento del tiempo                                                       *
+   !     x_t y y_t ------Desplazamientos horizontal y vertical                                       *
+   !     fx y  fy------Velocidades horizontales y verticales f_x = dx(t)/dt y f_y =dy(t)           
+  use parametros 
+  implicit none
+  real, intent(in) :: v0
+  real :: a,vt
+  real, dimension(size):: t, fx, fy, x, y
+  integer::i,j
+
+  !Definimoos el el ciclo de angulo
+   do j = 0,90,15
+
+  ! Utilizaremos el angulo en radianes
+     a = j * pi / 180.0
+  
+    
+  !Definimos nuestro ciclo de posicion 
+   do i = 0,size
+     fx(0) =v0*cos(a)
+     fy(0) =v0*sin(a)
+     x(0)=0.
+     y(0)=0.
+     t(0)=0.   
+
+     t(i+1)=t(i)+h
+     x(i+1)=x(i)+h*fx(i)
+     y(i+1)=y(i)+h*fy(i)
+
+     fx(i+1) = fx(i) + (2*vt/(g*t(i+1)**2))*(v0*cos(a)-x(i+1))
+     fy(i+1) = fy(i) + (2*vt/(g*t(i+1)**2))*(v0*sin(a)-y(i+1))-vt
+     
+     if (y(i)<0) exit 
+   !Escribiendo datos 
+     open(1, file='r_aire.dat', status='unknown')
+     write(1,1000) x(i+1), y(i+1)
+     1000 format(f18.10,5x,f18.10)
+  end do 
+  write(1,1100)
+  1100 format(/)
+ 
+  do i=0,size
+     t(i)=0.
+     x(i)=0.
+     y(i)=0.
+     fx(i)=0.
+     fy(i)=0.
+     end do
+  end do 
+   close(1)
+end subroutine 
+
+\end{verbatim}
+
+\end{document}
