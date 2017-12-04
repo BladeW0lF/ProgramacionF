@@ -1,0 +1,80 @@
+1-.Command Prompt
+	batman@ltsp28:~$
+		Nos abre una terminal en la cual se pueden escribir y ejecutar
+		distintos comandos.
+		Dentro de éste, podemos observar tambien (al ejecutar un comando) que
+		se producen ciertas líneas que indican la acción correspondiente.
+		Al terminar de indicar lo ejecutado, nos devuelve a nuestra linea de
+		comando ejecutable.
+
+2-. Basic Navigation
+	Comando: pwd.
+		Nos indica en dónde estamos actualmente, es decir, en qué directorio.
+	Comando: ls.
+		Nos muestra los contenidos del "lugar" donde nos encontramos
+	Comando: ls-1
+		Muestra una lista larga de los contenidos de nuestra ubicacion, dicha
+		lista contiene lo siguiente:
+		*El primer caracter indica si es un archivo normal (-) o si es un
+		directorio (d)
+		*Los siguientes 9 carcteres son permisos para el archivo o directorio
+		*El campo siguiente es el número de bloques
+		*El siguiente campo es el dueño del archivo o directorio
+		*Eñ siguiente campo es el grupo de archivos o directorios al cual
+		pertenece
+		*Siguiendo con el tamaño del archivo
+		*Sigue con la última modificación
+		*Finalmente tenemos el nombre del archivo
+
+3-. More About Files!
+	Comando:file.exe
+		Un archivo ejecutable o programa
+	Comando: file.txt
+		Un archivo simple de texto
+	Comando: file.png
+		Una imagen
+
+4-.Manual Pages!
+	Comando: man
+		Es un comando de búsqueda y descripción.
+		Nos dice el nombre del comando y una pequeña descripción
+	Comando: man -k
+		Realiza una búsqueda en base a una palabra clave
+
+5-. File Manipulation
+	Comando: mkdir
+		Con éste comando podremos crear un directorio
+	Comando: mkdir -p
+		Con -p crearemos un directorio "padre" como sea necesario
+	COmando: mkdir -v
+		Con -v hace que el comando mkdir nos diga que es lo que está haciendo en este 			momento.
+
+6-. Vi Text Editor!
+	Existen 2 maneras de VI (Insertar y Editar): 
+		Insertar hace que insertes un contenido en un archivo}
+		Editar hace que edites el contenido ya creado anteriormente dentro de un archivo
+			Comando: vi <file>
+
+7-. Wildcards!
+	Esto, es un set para crear bloques que te permiten crear un patrón definiendo un grupo de 	archivos o directorios
+		*- Representa cero o más caracteres
+		?- Representa un único caracter
+		[]-Representa un rango de caracteres
+Nota: El comando ls b* nos indicará que hemos utilizado un patrón de archivos o directorios, lo cuál el mismo programa traducirá a lo que nos queremos referir
+
+8-. Permisos!
+	Los permisos especifican a una persona en particular que puede o no para que haga o que no haga con un archivo dentro de tu programa.
+		Commando: r
+			Puede ver los contenidos de este archivo
+		Commando: w
+			Puede cambiar los contenidos del archivo
+		Commando: x
+			Puede ejecutar o correr archivos que estén en el programa
+	Para cada archivo definiremos 3 grupos de personas a quien le daremos permisos
+		Commando: owner
+	|		Persona que creó el archivo
+		Commando: group
+			Todo archivo pertenece a un grupo de personas
+		Commando: others
+			Todos quienes no sean parte del grupo o el dueño
+
