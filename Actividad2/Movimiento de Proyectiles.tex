@@ -1,0 +1,230 @@
+\documentclass[12pt,a4paper]{article}
+
+% set font encoding for PDFLaTeX or XeLaTeX
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{fontspec}
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage[spanish]{babel}
+  \usepackage{lmodern}
+  \usepackage{amsmath}
+  \usepackage{amsfonts}
+  \usepackage{amssymb}
+  \usepackage{graphicx}
+  \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\fi
+
+% used in maketitle
+\title{\textbf{Movimiento de Proyectiles}}
+\author{Eduardo Castillo Bastida}
+
+% Enable SageTeX to run SageMath code right inside this LaTeX file.
+% documentation: http://mirrors.ctan.org/macros/latex/contrib/sagetex/sagetexpackage.pdf
+% \usepackage{sagetex}
+
+\begin{document}
+\maketitle
+El movimiento de un proyectil es un tipo de movimiento en el cual un objeto o partícula describe una trayectoria parabólica cuando se mueve en cercanías de la superficie terrestre. Si consideramos el caso mas simple del movimiento, despreciamos la resistencia por el aire y solo consideramos al acción de la atracción gravitacional.
+\section{\textbf{Camponentes del Movimiento de Proyectiles}}
+\subsection{\textbf{Velocidad Inicial}}
+Corresponde a la velocidad de lanzamiento del proyectil. Consta de dos componentes, una vertical y otra horizontal:
+
+\begin{equation}
+v_0=v_{0x}i+v_{0y}j
+\end{equation}
+
+Las componentes vertical e horizontal de la velocidad inicial, se determinan mediante el angulo con respecto a la horizontal:
+\begin{eqnarray}
+v_{0x}=v_{0}cos(\theta)\nonumber \\
+v_{0y}=v_{0}sin(\theta)
+\end{eqnarray}
+\subsection{Aceleración}
+Dado que la unica fuerza considerado durante este tipo de movimiento, corresponde a la fuerza de atracción gravitacional, solamente existe al aceleración vertical. La componente horizontal de la velocidad permanece constante. Luego tenemos:
+
+\begin{eqnarray}
+a_{x}=0\nonumber\\
+a_{y}=-g
+\end{eqnarray}
+
+\subsection{Velocidad Tangencial}
+Durante todo el recorrido, la velocidad total, se mantiene tangente a la trayectoria. Su componente horizontal se mantiene constante, mientras que su componente vertical, varia por la existencia de la acelaración gravitacional. Por tanto, las componentes en función del tiempo t, pueden ser escritas como:
+\begin{eqnarray}
+v_{x}=v_{0}cos(\theta) \nonumber\\
+v_{y}=v_{0}sin(\theta)-gt 
+\end{eqnarray}
+La magnitud de la velocidad usando la identidad pitagórica, corresponde a:
+\begin{eqnarray}
+v=\sqrt{v_{x}^{2}+v_{y}^{2}}
+\end{eqnarray}
+\subsection{Desplazamiento}
+En cualquier momento, los desplazamientos vertical y horizontal pueden determinarse por medio de las ecuaciones:
+\begin{eqnarray}
+x=v_{0}tcos(\theta)\nonumber\\
+y=v_{0}tsin(\theta)-gt^{2}
+\end{eqnarray}
+La magnitud del desplazamiento está dada por:
+\begin{eqnarray}
+r=\sqrt{x^{2}+y^{2}}
+\end{eqnarray}
+Combinando la ecuación del desplazamiento vertical con la del desplazamiento horizontal, se obtiene una ecuación independiente del tiempo de la forma:
+\begin{eqnarray}
+y=xtan(\theta)-\frac{g}{2v_{0}^{2}cos^{2}(\theta)}x^{2}
+\end{eqnarray}
+Dado que g, el ángulo y la velocidad inicial son constantes, la ecuación anterior es de la forma:
+\begin{eqnarray}
+y=ax+bx^{2}
+\end{eqnarray}
+En donde a y b son constantes. La ecuacion corresponde a la ecuación de una parabola y por ende el movimiento describe una trayectoria parabólica. Si la posición (x,y) y el ángulo  son conocidos, la velocidad inicial puede determinarse mediante la ecuación:
+\begin{eqnarray}
+v_{0}=\sqrt{\frac{gx^{2}}{xsin2(\theta)-2ycos^{2}(\theta)}}
+\end{eqnarray}
+\subsection{Tiempo de Vuelo}
+Corresponde al tiempo que permanece el proyectil en el aire. Se obtiene una expresión para el tiempo de vuelo, de manera muy sencilla, con solo utilizar la ecuación vertical, haciendo y=0 y despejando t. La ecuación obtenida es:
+\begin{eqnarray}
+t=\frac{2v_{0}sin(\theta)}{g}
+\end{eqnarray}
+\subsection{Altura Máxima del proyectil}
+Usando la expresión para el tiempo de vuelo, puede determinarse una ecuación para la altura máxima $Y_{máx}$. Simplemente, el tiempo de subida hasta el punto mas alto, corresponde a la mitad del tiempo de vuelo. Luego la ecuación obtenida esta dada por:
+\begin{eqnarray}
+Y_{máx}=\frac{v^{2}_{0}sin^{2}(\theta)}{2g} 
+\end{eqnarray}
+\subsection{Alcance Máximo del Proyectil}
+EL angulo asociado con el alcance máximo del proyectil $X_{máx}$, puede determinarse combinando las ecuaciones del alcance horizontal y tiempo de vuelo. Obtenemos la expresión:
+\begin{eqnarray}
+X_{máx}=\frac{v^{2}_{0}}{g}sin(\theta)
+\end{eqnarray}
+Dado que $v_{0}$ y g son constantes, la ecuación anterior alcance su máximo valor para:
+\begin{eqnarray}
+sin2(\theta)=1 \nonumber\\
+2(\theta) = 90^{0} \nonumber\\
+\theta = 45^{0}
+\end{eqnarray}
+\section{Ejemplo}
+Dada una velocidad deinicial 42 $m/s$ y un ángulo de $40^{o}$. Determina la altura máxima, el tiempo de vuelo y la distancia horizontal alcanzada por un proyectil en las cercanías a la superficie terrestre.
+
+Solución:
+
+Determinamos primero el tiempo de vuelo usando la ecuación: $t=\frac{2v_{0}sin(\theta)}{g}$
+
+\begin{eqnarray}
+t_{v}=\frac{2(42\hspace{0.2cm} m/s)sin(40^{0})}{9.8\hspace{0.2cm} m/s^{2}}\nonumber\\
+t_{v}=5.5\hspace{0.2cm} seg\nonumber\\
+\end{eqnarray}
+Luego con este dato, calculamos el alcance horizontal y la altura máxima, usando las ecuaciones $Y_{máx}=\frac{v^{2}_{0}sin^{2}(\theta)}{2g}$ y $X_{máx}=\frac{v^{2}_{0}}{g}sin(\theta)$, tal como:
+\begin{eqnarray}\nonumber\\
+Y_{máx}=\frac{(42\hspace{0.2cm} m/s)^{2}sin^{2}(40^{0})}{2(9.8\hspace{0.2cm} m/s^{2})}\nonumber\\
+Y_{máx}=37.18\hspace{0.2cm} mts\nonumber\\
+X_{máx}=\frac{(42\hspace{0.2cm} m/s)^{2}}{9.8\hspace{0.2cm}m/s^{2}}(sin(40^{0}))\nonumber\\
+X_{máx}=115.7\hspace{0.2cm} mts\nonumber\\
+\end{eqnarray}
+Los cálculos del problema anterior pueden ser  resueltos usando las aplicaciones Fortran del apéndice.
+
+
+\newpage
+{\centering{\textbf{Apéndice}}}
+\section{Aplicaciones Fortran}
+\subsection{Tiempo de Vuelo}
+El código Fortran para la aplicación del calculo del tiempo de vuelo de proyectiles en cercanías a la superficie terrrestre es:
+\begin{verbatim}
+program projectile
+  implicit none
+
+  ! definimos constantes
+  real, parameter :: g = 9.8
+  real, parameter :: pi = 3.1415927
+
+  ! definimos las variables
+  real :: a, t, v
+
+  ! Leer valores para el ángulo (a) y la velocidad inicial (u) desde la terminal
+  
+  write(*,*) 'MOVIMIENTO PARABÓLICO'
+  write(*,*) 'APLICACIÓN PARA CALCULAR EL TIEMPO DE VUELO'
+  write(*,*) 'Introduzca los valores de ángulo (a) en grados y la velocidad inicial (v) en m/s'
+  read(*,*) a, v
+
+  ! convirtiendo ángulo a radianes
+  a = a * pi / 180.0
+  
+  ! las ecuación para el cálculo del tiempo de vuelo
+
+  t=2*v*sin(a)/g
+   
+ ! escribiendo el resultado en la pantalla
+  write(*,*) 'El tiempo de vuelo es: ', t
+  
+
+end program projectile
+
+\end{verbatim}
+\subsection{Altura Máxima}
+El código para la aplicación fortran para el cálculo de la altura máxima es:
+\begin{verbatim}
+program proyectilAltura
+
+implicit none
+
+!Definiendo Constantes
+real, parameter :: g = 9.8
+real, parameter :: pi=3.1415927
+
+!Definiendo variables
+
+real::a,v,y,t
+
+!Leer los valores en pantalla
+
+write(*,*) 'MOVIMIENTO PARABÓLICO'
+write(*,*) 'APLICACIÓN PARA CALCULAR LA ALTURA MÁXIMO (Ymáx)'
+write(*,*) 'Introduzca los datos de velocidad inicial (v) en m/s, el tiempo de vuelo (t) en segundos y el ángulo (a) en grados'
+read(*,*) v,t,a
+
+!Cálculo del angulo en radianes
+a=a*pi/180.0
+!Cálculo del alcance máximo
+
+y=v*t*sin(a)-(g*t*t)/2
+
+!Escribiendo los resultados en pantalla
+write(*,*) 'Xmáx corresponde a: ',y,'metros '
+
+end program proyectilAltura
+
+\end{verbatim}
+\subsection{Alcance Horizontal}
+Para el alcance horizontal usamos el código:
+\begin{verbatim}
+program proyectilAltura
+
+implicit none
+
+!Definiendo Constantes
+real, parameter :: g = 9.8
+real, parameter :: pi=3.1415927
+
+!Definiendo variables
+
+real::a,v,x,t
+
+!Leer los valores en pantalla
+
+write(*,*) 'MOVIMIENTO PARABÓLICO'
+write(*,*) 'APLICACIÓN PARA CALCULAR EL ALCANCE MÁXIMO (Xmáx)'
+write(*,*) 'Introduzca los datos de velocidad inicial (v) en m/s y el ángulo (a) en grados'
+read(*,*) v,a
+
+!Cálculo del ángulo en radianes
+a=a*pi/180.0
+!Cálculo del alcance máximo
+
+x=(v*v/g)*sin(a)
+
+!Escribiendo los resultados en pantalla
+write(*,*) 'Xmáx corresponde a: ',x,'metros '
+
+end program proyectilAltura
+
+\end{verbatim}
+\end{document}
